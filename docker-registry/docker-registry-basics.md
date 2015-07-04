@@ -145,7 +145,7 @@ You should see something like:
 
 Make the following curl request (which assumes a username and password both equal to admin):
 
-	curl -I -u admin:admin https://dev1.yourdomain.com:5043/v2/ 
+	curl -I -u admin:admin https://registrydev1.yourdomain.com:5043/v2/ 
 	
 You should see "200 OK" in the response headers:
 
