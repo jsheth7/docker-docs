@@ -131,11 +131,21 @@ This command:
 * helps nginx read in the generated htpasswd file from ~/Documents/registry/config/.htpasswd, which is mounted into the container (as read-only) at /etc/nginx/.htpasswd
 * helps nginx find the necessary SSL certificates from ~/Documents/registry/ssl, which are mapped (as read-only) inside the container to /etc/nginx/ssl
 
+## Verify nginx proxy is running
+
+    # Run in Terminal 1:
+    docker ps
+
+You should see something like:
+
+    CONTAINER ID    PORTS                           
+    db54311a4b28    80/tcp, 0.0.0.0:5043->443/tcp
+
 ## Test your connection
 
 Make the following curl request (which assumes a username and password both equal to admin):
 
-	curl -I -u admin:admin https://registrydev1.yourdomain.com/v2/ 
+	curl -I -u admin:admin https://dev1.yourdomain.com:5043/v2/ 
 	
 You should see "200 OK" in the response headers:
 
@@ -152,7 +162,7 @@ You should see "200 OK" in the response headers:
 
 ### Log into your registry
 
-	docker login -u admin -p admin -e email@email.com registrydev1.yourdomain.com:443
+	docker login -u admin -p admin -e email@email.com registrydev1.yourdomain.com:5043
 
 You should see something like:
 
@@ -165,11 +175,11 @@ You should see something like:
 
 ### Tag the hello-world image from the dev1 docker machine so it is ready to be deployed to the registry:
 
-	docker tag hello-world:latest registrydev1.yourdomain.com:443/hello-secure-world:latest
+	docker tag hello-world:latest registrydev1.yourdomain.com:5043/hello-secure-world:latest
 
 ### Push the hello-world image from the dev1 docker machine into the registry
 
-	docker push registrydev1.yourdomain.com:443/hello-secure-world:latest
+	docker push registrydev1.yourdomain.com:5043/hello-secure-world:latest
 
 ## Deploying a registry to a remote docker machine (host)
 
